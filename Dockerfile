@@ -7,5 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Menjalankan script training saat container dijalankan
 CMD ["python", "modelling_tuning.py"]

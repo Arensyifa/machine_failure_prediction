@@ -3,7 +3,6 @@ import pandas as pd
 import dagshub
 import matplotlib.pyplot as plt
 from xgboost import XGBClassifier
-# TAMBAHKAN accuracy_score DI SINI
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, ConfusionMatrixDisplay
 import json
 
@@ -26,7 +25,6 @@ with mlflow.start_run():
     
     # Metrics
     y_pred = model.predict(X_test)
-    # Sekarang acc tidak akan error lagi
     acc = accuracy_score(y_test, y_pred)
     mlflow.log_metric("accuracy", acc)
     print(f"Berhasil! Akurasi Model: {acc}")
@@ -40,14 +38,14 @@ with mlflow.start_run():
     
     # Artifact: Feature Importance
     plt.figure()
-    # Memberi label pada feature importance agar lebih informatif
+    # Memberi label pada feature importance
     feat_importances = pd.Series(model.feature_importances_, index=X_train.columns)
     feat_importances.nlargest(10).plot(kind='barh')
     plt.title("Feature Importance")
     plt.savefig("feature_importance.png")
     mlflow.log_artifact("feature_importance.png")
     
-    # Extra Artifacts (Advanced)
+    # Extra Artifacts
     with open("metric_info.json", "w") as f:
         json.dump({"status": "completed", "threshold_met": True}, f)
     mlflow.log_artifact("metric_info.json")
