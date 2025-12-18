@@ -3,7 +3,8 @@ import pandas as pd
 import dagshub
 import matplotlib.pyplot as plt
 from xgboost import XGBClassifier
-from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
+# TAMBAHKAN accuracy_score DI SINI
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, ConfusionMatrixDisplay
 import json
 
 # Init DagsHub
@@ -25,8 +26,10 @@ with mlflow.start_run():
     
     # Metrics
     y_pred = model.predict(X_test)
+    # Sekarang acc tidak akan error lagi
     acc = accuracy_score(y_test, y_pred)
     mlflow.log_metric("accuracy", acc)
+    print(f"Berhasil! Akurasi Model: {acc}")
     
     # Artifact: Confusion Matrix
     cm = confusion_matrix(y_test, y_pred)
@@ -37,7 +40,10 @@ with mlflow.start_run():
     
     # Artifact: Feature Importance
     plt.figure()
-    pd.Series(model.feature_importances_).plot(kind='bar')
+    # Memberi label pada feature importance agar lebih informatif
+    feat_importances = pd.Series(model.feature_importances_, index=X_train.columns)
+    feat_importances.nlargest(10).plot(kind='barh')
+    plt.title("Feature Importance")
     plt.savefig("feature_importance.png")
     mlflow.log_artifact("feature_importance.png")
     
@@ -47,3 +53,5 @@ with mlflow.start_run():
     mlflow.log_artifact("metric_info.json")
     
     mlflow.sklearn.log_model(model, "model")
+
+print("Eksperimen selesai. Silakan cek DagsHub!")
