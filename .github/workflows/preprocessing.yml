@@ -1,31 +1,39 @@
-name: Preprocessing Workflow
+name: Preprocessing Data
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
 
 jobs:
   preprocess:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4  # Diupdate ke v4
+
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5 # Diupdate ke v5
         with:
-          python-version: '3.11.5'
-      - name: Install dependencies
-        run: pip install pandas scikit-learn imbalanced-learn
-      - name: Run Automation
-        run: python preprocessing/automate_aren.py
-      - name: Commit result
+          python-version: '3.12.7'
+
+      - name: Install Dependencies
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add maintenance_preprocessing/*.csv
-          git commit -m "Update preprocessed data" || echo "No changes"
-          git push
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+          pip install pandas scikit-learn imbalanced-learn
+
+      - name: Run Preprocessing
+        run: python preprocessing/automate_aren.py
+
+      - name: Upload Processed Data
+        uses: actions/upload-artifact@v4 # INI YANG WAJIB V4
         with:
           name: preprocessed-data
           path: maintenance_preprocessing/
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "github-actions"
+          git add maintenance_preprocessing/*.csv
+          git commit -m "Auto-update preprocessed data" || echo "No changes to commit"
+          git push
