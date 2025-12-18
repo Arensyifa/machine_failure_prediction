@@ -7,12 +7,12 @@ from sklearn.metrics import classification_report, confusion_matrix, ConfusionMa
 import json
 
 # Init DagsHub
-dagshub.init(repo_owner="USERNAME", repo_name="machine_failure_prediction", mlflow=True)
+dagshub.init(repo_owner="Arensyifa", repo_name="machine_failure_prediction", mlflow=True)
 
-X_train = pd.read_csv('maintance_preprocessing/X_train.csv')
-y_train = pd.read_csv('maintance_preprocessing/y_train.csv')
-X_test = pd.read_csv('maintance_preprocessing/X_test.csv')
-y_test = pd.read_csv('maintance_preprocessing/y_test.csv')
+X_train = pd.read_csv('maintenance_preprocessing/X_train.csv')
+y_train = pd.read_csv('maintenance_preprocessing/y_train.csv')
+X_test = pd.read_csv('maintenance_preprocessing/X_test.csv')
+y_test = pd.read_csv('maintenance_preprocessing/y_test.csv')
 
 mlflow.set_experiment("Predictive_Maintenance_Tuning")
 

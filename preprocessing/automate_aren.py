@@ -27,12 +27,12 @@ def preprocess_data(df):
     return X_train, X_test, y_train, y_test
 
 if __name__ == "__main__":
-    df = load_data('maintance_raw\maintance.csv')
+    df = load_data('maintenance_raw/maintenance.csv')
     X_train, X_test, y_train, y_test = preprocess_data(df)
     
-    os.makedirs('namadataset_preprocessing', exist_ok=True)
-    pd.DataFrame(X_train).to_csv('namadataset_preprocessing/X_train.csv', index=False)
-    pd.DataFrame(X_test).to_csv('namadataset_preprocessing/X_test.csv', index=False)
-    pd.DataFrame(y_train).to_csv('namadataset_preprocessing/y_train.csv', index=False)
-    pd.DataFrame(y_test).to_csv('namadataset_preprocessing/y_test.csv', index=False)
+    os.makedirs('maintenance_preprocessing', exist_ok=True)
+    pd.DataFrame(X_train).to_csv('maintenance_preprocessing/X_train.csv', index=False)
+    pd.DataFrame(X_test).to_csv('maintenance_preprocessing/X_test.csv', index=False)
+    pd.DataFrame(y_train).to_csv('maintenance_preprocessing/y_train.csv', index=False)
+    pd.DataFrame(y_test).to_csv('maintenance_preprocessing/y_test.csv', index=False)
     print("Preprocessing completed and saved.")
