@@ -1,0 +1,31 @@
+name: Preprocessing Workflow
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.7'
+      - name: Install dependencies
+        run: pip install pandas scikit-learn imbalanced-learn
+      - name: Run Automation
+        run: python preprocessing/automate_aren.py
+      - name: Commit result
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add namadataset_preprocessing/*.csv
+          git commit -m "Update preprocessed data" || echo "No changes"
+          git push
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: preprocessed-data
+          path: maintance_preprocessing/

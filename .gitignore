@@ -1,0 +1,11 @@
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.csv
+.DS_Store
+Thumbs.db
+mlruns/
+.env
