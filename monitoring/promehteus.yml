@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'maintenance_model'
+    static_configs:
+      - targets: ['localhost:8000']

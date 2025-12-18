@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, ConfusionMatrixDisplay
 import json
+import joblib
 
 # Init DagsHub
 dagshub.init(repo_owner="Arensyifa", repo_name="machine_failure_prediction", mlflow=True)
@@ -51,5 +52,9 @@ with mlflow.start_run():
     mlflow.log_artifact("metric_info.json")
     
     mlflow.sklearn.log_model(model, "model")
+
+# Baris ini akan memaksa laptopmu membuat file model.pkl di folder utama
+joblib.dump(model, 'model.pkl') 
+print("File model.pkl berhasil dibuat di folder utama!")
 
 print("Eksperimen selesai. Silakan cek DagsHub!")
