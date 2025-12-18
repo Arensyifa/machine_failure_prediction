@@ -12,7 +12,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12.7'
+          python-version: '3.11.5'
       - name: Install dependencies
         run: pip install pandas scikit-learn imbalanced-learn
       - name: Run Automation
@@ -21,11 +21,11 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add namadataset_preprocessing/*.csv
+          git add maintenance_preprocessing/*.csv
           git commit -m "Update preprocessed data" || echo "No changes"
           git push
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: preprocessed-data
-          path: maintance_preprocessing/
+          path: maintenance_preprocessing/
